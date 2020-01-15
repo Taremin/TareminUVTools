@@ -31,7 +31,7 @@ def get_sync(context):
 
 
 class SelectedUV:
-    vertex: bmesh.types.BMVert
+    vertex: int
     uv: mathutils.Vector
 
     def __init__(self, vertex: bmesh.types.BMVert, uv: mathutils.Vector):
@@ -106,11 +106,11 @@ class UV_OT_taremin_uv_bouding_point(bpy.types.Operator):
             'BOTTOM': lambda a, b: a.uv[1] > b.uv[1],
         }
 
-        self.get_selected_uvs(context.active_object, conditions[self.position])
+        self.select_bound_uv(context.active_object, conditions[self.position])
 
         return {'FINISHED'}
 
-    def get_selected_uvs(self, obj, func):
+    def select_bound_uv(self, obj, func):
         bpy.ops.object.editmode_toggle()
         bpy.ops.object.editmode_toggle()
 
