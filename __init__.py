@@ -8,7 +8,7 @@ bl_info = {
         'Taremin'
     ),
     'version': (0, 0, 1),
-    'blender': (2, 80, 0),
+    'blender': (2, 79, 0),
     'location': 'UV Editor > Context Menu',
     'description': '',
     'warning': '',
@@ -31,9 +31,6 @@ def get_sync(context):
 
 
 class SelectedUV:
-    vertex: int
-    uv: mathutils.Vector
-
     def __init__(self, vertex: bmesh.types.BMVert, uv: mathutils.Vector):
         self.vertex = vertex
         self.uv = uv
@@ -48,8 +45,8 @@ class UV_OT_taremin_uv_axis_setter(bpy.types.Operator):
     bl_description = '選択頂点のUV座標を選択ミラーモディファイアの反転オフセットにセットします'
     bl_options = {'REGISTER', 'UNDO'}
 
-    modifier_index: bpy.props.IntProperty(default=-1)
-    axis: bpy.props.StringProperty(default='')
+    modifier_index = bpy.props.IntProperty(default=-1)
+    axis = bpy.props.StringProperty(default='')
 
     def execute(self, context):
         obj = context.object
@@ -62,10 +59,10 @@ class UV_OT_taremin_uv_axis_setter(bpy.types.Operator):
 
         if self.axis == 'U':
             modifier.use_mirror_u = True
-            modifier.mirror_offset_u = (-1 - modifier.offset_u) + selected_uvs[0].uv[0] * 2
+            modifier.mirror_offset_u = -1 + selected_uvs[0].uv[0] * 2
         elif self.axis == 'V':
             modifier.use_mirror_v = True
-            modifier.mirror_offset_v = (-1 - modifier.offset_v) + selected_uvs[0].uv[1] * 2
+            modifier.mirror_offset_v = -1 + selected_uvs[0].uv[1] * 2
         else:
             report.error(type={'ERROR'}, message='不正な状態です')
 
@@ -96,7 +93,7 @@ class UV_OT_taremin_uv_bouding_point(bpy.types.Operator):
     bl_description = '選択頂点の中から上下左右の端を選択します'
     bl_options = {'REGISTER', 'UNDO'}
 
-    position: bpy.props.StringProperty()
+    position = bpy.props.StringProperty()
 
     def execute(self, context):
         conditions = {
@@ -143,7 +140,7 @@ class IMAGE_MT_uvs_mirror_tools_axis_menu(bpy.types.Menu):
     bl_idname = 'IMAGE_MT_uvs_mirror_tools_axis_menu'
     bl_label = 'UV Mirror Tools SubMenu'
 
-    axis: bpy.props.StringProperty()
+    axis = bpy.props.StringProperty()
 
     def draw(self, context):
         obj = context.object
@@ -204,13 +201,13 @@ register_classes = [
 def register():
     for cls in register_classes:
         bpy.utils.register_class(cls)
-    bpy.types.IMAGE_MT_uvs_context_menu.append(menu_func)
+    bpy.types.IMAGE_MT_uvs.append(menu_func)
 
 
 def unregister():
     for cls in register_classes:
         bpy.utils.unregister_class(cls)
-    bpy.types.IMAGE_MT_uvs_context_menu.remove(menu_func)
+    bpy.types.IMAGE_MT_uvs.remove(menu_func)
 
 
 if __name__ == '__main__':
