@@ -48,12 +48,12 @@ class UV_OT_taremin_uv_axis_setter(bpy.types.Operator):
     bl_description = '選択頂点のUV座標を選択ミラーモディファイアの反転オフセットにセットします'
     bl_options = {'REGISTER', 'UNDO'}
 
-    modifier_index: bpy.props.IntProperty(default=-1)
+    modifier_name: bpy.props.StringProperty(default='')
     axis: bpy.props.StringProperty(default='')
 
     def execute(self, context):
         obj = context.object
-        modifier = obj.modifiers[self.modifier_index]
+        modifier = obj.modifiers[self.modifier_name]
 
         selected_uvs = self.get_selected_uvs(obj)
         if len(selected_uvs) != 1:
@@ -152,9 +152,10 @@ class IMAGE_MT_uvs_mirror_tools_axis_menu(bpy.types.Menu):
         col = layout.column()
 
         for i in range(len(obj.modifiers)):
-            if obj.modifiers[i].type == 'MIRROR':
-                op = col.operator(UV_OT_taremin_uv_axis_setter.bl_idname, text=obj.modifiers[i].name, translate=False)
-                op.modifier_index = i
+            modifier = obj.modifiers[i]
+            if modifier.type == 'MIRROR':
+                op = col.operator(UV_OT_taremin_uv_axis_setter.bl_idname, text=modifier.name, translate=False)
+                op.modifier_name = obj.modifiers[i].name
                 op.axis = self.axis
 
 
