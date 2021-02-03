@@ -1,4 +1,4 @@
-# UV Mirror Tools
+# Taremin UV Tools
 
 ## なにこれ？
 
@@ -37,3 +37,11 @@ UVコンテキストメニューの `UV Mirror Tools` 内から使用できま�
 
 Twitter: [@Taremin_VR](https://twitter.com/Taremin_VR) までお気軽に連絡ください。
 要望や不具合報告などは Issues か Twitter どちらでもお気軽にどうぞ。
+
+## 履歴
+
+- 0.0.2
+  - 名前を Taremin UV Tools に変更
+  - 配列モディファイアのUVオプションに対応
+- 0.0.1
+  - 初期実装
